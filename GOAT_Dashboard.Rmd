@@ -11,11 +11,6 @@ params:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 
-# source("01_scripts/create_yahoo_token.R")
-# yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="deu2s7g")
-# save(yahoo_token,file="yahoo_token.Rdata")
-
-
 week_num <- params$week_num
 source("01_scripts/call_script.R")
 run_it_all(week_num = week_num)

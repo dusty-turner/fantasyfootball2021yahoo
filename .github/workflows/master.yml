@@ -20,4 +20,3 @@ jobs:
         destination_folder: 'static/GOAT'
         user_email: 'dusty.s.turner@gmail.com'
         user_name: 'dusty-turner'
-        commit_message: 'auto ff committ'
