@@ -25,13 +25,13 @@ Row {data-height=50}
 ### 
 
 ```{r}
-valueBox(value = str_c("Top points award for week ", week_num), caption = str_c(max_team, " with ", max_points, "s"), icon = "fa-pencil")
+valueBox(value = str_c(max_team, ": ", max_points), caption = str_c("Top points award for week ", week_num), icon = "fa-pencil")
 ```
 
 ### 
 
 ```{r}
-valueBox(value = str_c("Least points award for week ", week_num), caption = str_c(min_team, " with ", min_points, "s"), icon = "fa-pencil")
+valueBox(value = str_c(min_team, ": ", min_points), caption = str_c("Least points award for week ", week_num), icon = "fa-pencil")
 ```
 
 Row {data-height=50}
