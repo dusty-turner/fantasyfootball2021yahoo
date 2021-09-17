@@ -4,6 +4,8 @@ output:
   flexdashboard::flex_dashboard:
     orientation: rows
     vertical_layout: fill
+params: 
+  week_num: 10
 ---
 
 ```{r setup, include=FALSE}
@@ -14,7 +16,7 @@ library(flexdashboard)
 # save(yahoo_token,file="yahoo_token.Rdata")
 
 
-week_num <- 1
+week_num <- params$week_num
 source("01_scripts/call_script.R")
 run_it_all(week_num = week_num)
 ```

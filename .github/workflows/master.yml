@@ -14,7 +14,7 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_file: 'GOAT_Dashboard.html'
+        source_folder: '02_dashboards'
         destination_repo: 'dusty-turner/blog-reboot'
         destination_branch: 'master'
         destination_folder: 'static/GOAT'
