@@ -1,0 +1,83 @@
+---
+title: "G.O.A.T. Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+# source("01_scripts/create_yahoo_token.R")
+# yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="deu2s7g")
+# save(yahoo_token,file="yahoo_token.Rdata")
+
+
+week_num <- 1
+source("01_scripts/call_script.R")
+run_it_all(week_num = week_num)
+```
+
+Overview
+===============================
+
+Row {data-height=50}
+-------------------------------------
+
+### 
+
+```{r}
+valueBox(value = str_c("Top points award for week ", week_num), caption = str_c(max_team, " with ", max_points, "s"), icon = "fa-pencil")
+```
+
+### 
+
+```{r}
+valueBox(value = str_c("Least points award for week ", week_num), caption = str_c(min_team, " with ", min_points, "s"), icon = "fa-pencil")
+```
+
+Row {data-height=50}
+-------------------------------------
+
+### 
+
+```{r include=FALSE}
+total_mug <-str_c(unlist(t(max_points_tally %>% mutate(n = str_c(n,"<br>")))),collapse = " ")
+```
+
+
+```{r}
+valueBox(value = "Top Points Tally",
+caption = total_mug,
+icon = "fa-pencil")
+
+```
+
+###
+
+```{r include=TRUE}
+total_min <-str_c(unlist(t(min_points_tally %>% mutate(n = str_c(n,"<br>")))),collapse = " ")
+```
+
+
+```{r}
+valueBox(value = "Loser Tally", caption = total_min,icon = "fa-pencil")
+
+```
+
+Row {data-height=350}
+-------------------------------------
+   
+### 
+
+```{r}
+luck_chart
+```   
+    
+### 
+
+```{r}
+projected_plot
+```
+
