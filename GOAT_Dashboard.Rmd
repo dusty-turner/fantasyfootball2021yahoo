@@ -5,7 +5,7 @@ output:
     orientation: rows
     vertical_layout: fill
 params: 
-  week_num: 10
+  week_num: 2
 ---
 
 ```{r setup, include=FALSE}

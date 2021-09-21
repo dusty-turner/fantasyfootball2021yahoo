@@ -3,13 +3,13 @@ library(ggrepel)
 library(httr)
 library(XML)
 
-# source("create_yahoo_token.R")
+# source("01_scripts/create_yahoo_token.R")
 
 # week_num <- 1
 
 run_it_all <- function(week_num = week_num){
 
-# yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="swdmhp3")
+# yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="t7nmxbu")
 # save(yahoo_token,file="yahoo_token.Rdata")
 
 source("01_scripts/source_functions.R")
