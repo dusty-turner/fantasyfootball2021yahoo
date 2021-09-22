@@ -16,7 +16,7 @@ source("01_scripts/output_builder.R")
 run_it_all(week_num = week_num)
 ```
 
-Overview
+Season Stats
 ===============================
 
 Row {data-height=50}
