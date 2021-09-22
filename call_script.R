@@ -1,8 +1,8 @@
-# source("01_scripts/create_yahoo_token.R")
-# yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="deu2s7g")
-# save(yahoo_token,file="yahoo_token.Rdata")
+source("01_scripts/create_yahoo_token.R")
+yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="qs5zmzj")
+save(yahoo_token,file="yahoo_token.Rdata")
 
-week_num <- 1
+week_num <- 2
 
 rmarkdown::render("GOAT_Dashboard.Rmd", 
                   params = list(week_num = week_num)

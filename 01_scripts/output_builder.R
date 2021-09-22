@@ -3,16 +3,17 @@ library(ggrepel)
 library(httr)
 library(XML)
 
+source("01_scripts/source_functions.R")
 # source("01_scripts/create_yahoo_token.R")
 
-# week_num <- 1
+# week_num <- 2
 
 run_it_all <- function(week_num = week_num){
 
 # yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="t7nmxbu")
 # save(yahoo_token,file="yahoo_token.Rdata")
 
-source("01_scripts/source_functions.R")
+# source("01_scripts/source_functions.R")
 
 # yahoo_token
 
@@ -20,7 +21,7 @@ season_projections <-
 map_dfr(.x = 1:15, .f = ~get_weekly_points(week_number = .x, token = yahoo_token)) %>% 
   mutate(week = sort(rep(1:15,5))) %>% 
   mutate(across(.cols = c(PointsA,PointsB,ProjectedPointsA,ProjectedPointsB), .fns = ~as.numeric(.))) %>% 
-  filter(week == week_num) %>% 
+  filter(week <= week_num) %>% 
   mutate(winner = if_else(PointsA > PointsB, TeamA, TeamB)) %>% 
   mutate(Loser = if_else(PointsA < PointsB, TeamA, TeamB))
 
@@ -85,7 +86,7 @@ projected_minus_actual <-
   ) %>% 
   mutate(Proj_minus_Act = Project - Points) %>% 
   group_by(Team) %>% 
-  summarise(Net_Points = sum(Proj_minus_Act), Projected = sum(Project), Actual = Points)
+  summarise(Net_Points = sum(Proj_minus_Act), Projected = sum(Project), Actual = sum(Points))
 
 projected_plot <<-
 projected_minus_actual %>% 
@@ -145,5 +146,36 @@ max_min_points %>%
   arrange(-n) %>%
   ungroup() %>% 
   select(-week)
+
+week_n_projected_minus_actual <-
+season_projections  %>% 
+  select(Team = TeamA, Points = PointsA, Project = ProjectedPointsA, week) %>% 
+  bind_rows(
+    season_projections %>% select(Team = TeamB, Points = PointsB, Project = ProjectedPointsB, week)
+  ) %>% 
+  filter(week == week_num) %>% 
+  mutate(Proj_minus_Act = Project - Points) %>% 
+  group_by(Team) %>% 
+  summarise(Net_Points = sum(Proj_minus_Act), Projected = sum(Project), Actual = sum(Points)) 
+
+luck_by_week <<-
+week_n_projected_minus_actual %>% 
+  ggplot(aes(x = Projected, y = Actual, color = Net_Points)) +
+  geom_point() +
+  geom_abline(aes(intercept = 0,slope = 1)) +
+  # xlim(min(c(projected_minus_actual$Projected,projected_minus_actual$Actual))-10, max(c(projected_minus_actual$Projected,projected_minus_actual$Actual) + 10)) +
+  ylim(min(c(week_n_projected_minus_actual$Projected,week_n_projected_minus_actual$Actual))-10, max(c(week_n_projected_minus_actual$Projected,week_n_projected_minus_actual$Actual) + 10)) +
+  scale_color_gradient2(low = "green",mid = "grey" ,high = "red",midpoint = 0,limits=c(range(projected_minus_actual$Net_Points))) +
+  # scale_color_continuous(low = "green", high = "red",limits=c(range(total_standings$luck))) +
+  geom_label_repel(aes(label = str_c(Team)), color = "Black",max.iter = 10000) +
+  # geom_label(data = luck_help_df,mapping = aes(x=win_perc,y=week_win_perc,label = labs), color = "Black", label.size = 1) 
+  labs(title = str_c("Did your team over or under perform in week ", week_num, "?"),subtitle = "Above the line: Over performing \nUnder The Line: Under performing",
+       x = "Week Projected Points", y = "Week Actual Points", color = "Amount of Over Performance",
+       caption = "Black line represents scoring exactly what you were projected") +
+  theme(legend.position = "none")
+
+
+
+
 
 }
