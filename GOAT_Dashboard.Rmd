@@ -5,7 +5,7 @@ output:
     orientation: rows
     vertical_layout: fill
 params: 
-  week_num: 2
+  week_num: 3
 ---
 
 ```{r setup, include=FALSE}
@@ -63,7 +63,7 @@ luck_chart
 projected_plot
 ```
 
-Week 2
+Week `r week_num`
 ===============================
 
 Row {data-height=50}
