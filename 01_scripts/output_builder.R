@@ -137,7 +137,12 @@ max_min_points %>%
   count(Team) %>% 
   arrange(-n) %>% 
   ungroup() %>% 
-  select(-week)
+  select(-week) %>% 
+  group_by(Team) %>% 
+  summarise(n = sum(n)) %>% 
+  ungroup() %>% 
+  arrange(-n)
+
 
 min_points_tally <<-  
 max_min_points %>% 
@@ -145,7 +150,11 @@ max_min_points %>%
   count(Team) %>% 
   arrange(-n) %>%
   ungroup() %>% 
-  select(-week)
+  select(-week) %>% 
+  group_by(Team) %>% 
+  summarise(n = sum(n)) %>% 
+  ungroup() %>% 
+  arrange(-n)
 
 week_n_projected_minus_actual <-
 season_projections  %>% 
