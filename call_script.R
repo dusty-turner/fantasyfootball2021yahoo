@@ -1,5 +1,5 @@
 source("01_scripts/create_yahoo_token.R")
-yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="etd4grz")
+yahoo_token <- httr::oauth2.0_access_token(yahoo,myapp,code="zekzaa7")
 save(yahoo_token,file="yahoo_token.Rdata")
 
 week_num <- 10
