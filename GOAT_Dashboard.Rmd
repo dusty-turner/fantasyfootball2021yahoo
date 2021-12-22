@@ -5,34 +5,19 @@ output:
     orientation: rows
     vertical_layout: fill
 params: 
-  week_num: 10
+  week_num: 3
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
 
 week_num <- params$week_num
-source("01_scripts/call_script.R")
+source("01_scripts/output_builder.R")
 run_it_all(week_num = week_num)
 ```
 
-Overview
+Season Stats
 ===============================
-
-Row {data-height=50}
--------------------------------------
-
-### 
-
-```{r}
-valueBox(value = str_c(max_team, ": ", max_points), caption = str_c("Top points award for week ", week_num), icon = "fa-pencil")
-```
-
-### 
-
-```{r}
-valueBox(value = str_c(min_team, ": ", min_points), caption = str_c("Least points award for week ", week_num), icon = "fa-pencil")
-```
 
 Row {data-height=50}
 -------------------------------------
@@ -77,4 +62,32 @@ luck_chart
 ```{r}
 projected_plot
 ```
+
+Week `r week_num`
+===============================
+
+Row {data-height=50}
+-------------------------------------
+
+### 
+
+```{r}
+valueBox(value = str_c(max_team, ": ", max_points), caption = str_c("Top points award for week ", week_num), icon = "fa-pencil")
+```
+
+### 
+
+```{r}
+valueBox(value = str_c(min_team, ": ", min_points), caption = str_c("Least points award for week ", week_num), icon = "fa-pencil")
+```
+
+Row {data-height=350}
+-------------------------------------
+
+### 
+
+```{r}
+luck_by_week
+```
+
 

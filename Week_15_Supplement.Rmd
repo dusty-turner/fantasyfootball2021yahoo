@@ -1,0 +1,41 @@
+---
+title: "GOAT Review"
+author: "Dusty Turner"
+date: "12/21/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = F, message = F, eval = T)
+```
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+library(httr)
+library(XML)
+
+source("01_scripts/source_functions.R")
+
+week_num = 15
+
+out <-
+map_dfr(.x = 1:15, .f = ~get_weekly_points(week_number = .x, token = yahoo_token)) %>% 
+  mutate(week = sort(rep(1:15,5))) %>% 
+  mutate(across(.cols = c(PointsA,PointsB,ProjectedPointsA,ProjectedPointsB), .fns = ~as.numeric(.))) 
+```
+
+```{r}
+points_list <-
+  out %>% 
+  select(Team = TeamA, Points = PointsA, week) %>% 
+  bind_rows(out %>% select(Team = TeamB, Points = PointsB, week)) 
+
+```
+
+```{r}
+points_list %>% 
+  arrange(Points) %>% 
+  DT::datatable()
+```
+
